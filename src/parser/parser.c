@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srall <srall@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lliu <lliu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 00:15:29 by srall             #+#    #+#             */
-/*   Updated: 2023/10/20 00:36:37 by srall            ###   ########.fr       */
+/*   Updated: 2023/10/27 16:52:45 by lliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	count_ele(char **line)
 	int	i;
 
 	i = 0;
-	while (line[i])
+	while (line[i] && ft_strncmp(line[i], "\n", 2))
 		i++;
 	return (i);
 }
@@ -45,7 +45,7 @@ static void	check_scene(char *line, int *count)
 		|| (!ft_strncmp(line_str[0], "cy", 3) && count_ele(line_str) == 6))
 		check_object(line_str);
 	else
-		ft_error("Wrong SCENE parameter in .rt file.\n", 1);
+		ft_error("Wrong1 SCENE parameter in .rt file.\n", 1);
 	free_char(line_str);
 	return ;
 }
@@ -64,18 +64,19 @@ void	check_file(char *filename)
 	if (fd < 0)
 		ft_error("Open .rt file failed.\n", 1);
 	line = get_next_line(fd);
-	while (line != NULL)
+	while (line)
 	{
-		while (!ft_strncmp(line, "\n", 2) && free_str(line))
+		while (line && !ft_strncmp(line, "\n", 2) && free_str(line))
 			line = get_next_line(fd);
+		if (!line)
+			break ;
 		check_scene(line, count);
 		line = get_next_line(fd);
 	}
 	close(fd);
 	if (count[A] != 1 || count[C] != 1 || count[L] != 1 || count[R] != 1
 		|| count[BG] != 1)
-		ft_error("Wrong SCENE parameter in .rt file.\n", 1);
-	return ;
+		ft_error("Wrong2 SCENE parameter in .rt file.\n", 1);
 }
 
 static void	assign_scene(char *line, t_scene *scene)
@@ -121,8 +122,10 @@ void	init_scene(char *filename, t_scene *scene)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		while (!ft_strncmp(line, "\n", 2) && free_str(line))
+		while (line && !ft_strncmp(line, "\n", 2) && free_str(line))
 			line = get_next_line(fd);
+		if (!line)
+			break ;
 		assign_scene(line, scene);
 		line = get_next_line(fd);
 	}

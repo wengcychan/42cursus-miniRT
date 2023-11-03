@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wchan <wchan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: srall <srall@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:41:49 by wchan             #+#    #+#             */
-/*   Updated: 2023/10/19 14:44:56 by wchan            ###   ########.fr       */
+/*   Updated: 2023/10/28 07:01:49 by srall            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ double		get_cylinder_intersection(t_object *cy,
 				t_vec3 ray, t_vec3 ray_origin);
 
 // shading.c
+int			get_am(t_ambient *ambient, t_object *obj);
 int			get_shading_color(t_scene *scene, t_intersect intersect);
 
 #endif

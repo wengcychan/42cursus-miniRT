@@ -6,13 +6,13 @@
 /*   By: srall <srall@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 00:26:51 by srall             #+#    #+#             */
-/*   Updated: 2023/08/07 00:31:00 by srall            ###   ########.fr       */
+/*   Updated: 2023/10/28 07:01:41 by srall            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static int	get_ambient(t_ambient *ambient, t_object *obj)
+int	get_am(t_ambient *ambient, t_object *obj)
 {
 	t_vec3	ambient_color;
 
@@ -55,7 +55,7 @@ static int	get_specular(t_light *light, t_intersect intersect)
 
 int	get_shading_color(t_scene *scene, t_intersect intersect)
 {
-	return (get_ambient(scene->ambient, intersect.obj)
+	return (get_am(scene->ambient, intersect.obj)
 		+ get_diffuse(scene->light, intersect) + get_specular(scene->light,
 			intersect));
 }

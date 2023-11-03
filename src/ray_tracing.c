@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_tracing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srall <srall@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lliu <lliu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 00:06:53 by srall             #+#    #+#             */
-/*   Updated: 2023/08/07 01:27:50 by srall            ###   ########.fr       */
+/*   Updated: 2023/10/27 16:52:20 by lliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_vec3	generate_ray(t_scene *scene, int i, int j)
 	t_vec3	pixel_coord_camera;
 
 	pixel_coord_camera = copy_vec3(i + 0.5 - scene->resolution[0] / 2,
-			scene->resolution[1] / 2 - j - 0.5, -scene->resolution[0] / (2
-				* tanf(scene->camera->fov / 2 * M_PI / 180)));
+			scene->resolution[1] / 2 - j - 0.5, -scene->resolution[0]
+			/ (2 * tanf(scene->camera->fov / 2 * M_PI / 180)));
 	pixel_point = transform_camera_to_world(scene, pixel_coord_camera);
 	return (normalize_vec(create_vec(pixel_point, scene->camera->point)));
 }
@@ -36,8 +36,7 @@ double	get_intersection(t_object *obj, t_vec3 ray, t_vec3 ray_origin)
 		return (false);
 }
 
-void	get_nearest_obj(t_list *obj_lst, t_scene *scene,
-		t_intersect *intersect)
+void	get_nearest_obj(t_list *obj_lst, t_scene *scene, t_intersect *intersect)
 {
 	double	cur_dist;
 	double	ray_dist;
@@ -73,13 +72,17 @@ void	get_intersect_surface_normal(t_intersect *intersect)
 		intersect->surface_normal = intersect->obj->vec_norm;
 	else if (intersect->obj->identifier == 'c')
 	{
-		root = -(2 * dot_vec(intersect->obj->vec_norm,
-					create_vec(intersect->obj->center,
-						intersect->intersect_point)))
-			/ (2 * dot_vec(intersect->obj->vec_norm, intersect->obj->vec_norm));
-		intersect->surface_normal = create_vec(intersect->intersect_point,
-				add_vec(intersect->obj->center,
-					multiply_scalar_vec(intersect->obj->vec_norm, root)));
+		root = dot_vec(intersect->obj->vec_norm,
+				create_vec(intersect->intersect_point, intersect->obj->center));
+		if (fabs(root) < intersect->obj->height / 2 - EPSILON)
+			intersect->surface_normal = create_vec(intersect->intersect_point,
+					add_vec(intersect->obj->center,
+						multiply_scalar_vec(intersect->obj->vec_norm, root)));
+		else if (root > 0)
+			intersect->surface_normal = intersect->obj->vec_norm;
+		else if (root)
+			intersect->surface_normal
+				= multiply_scalar_vec(intersect->obj->vec_norm, -1);
 	}
 	intersect->surface_normal = normalize_vec(intersect->surface_normal);
 	return ;

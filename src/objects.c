@@ -6,7 +6,7 @@
 /*   By: srall <srall@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 00:05:25 by srall             #+#    #+#             */
-/*   Updated: 2023/08/07 01:27:34 by srall            ###   ########.fr       */
+/*   Updated: 2023/10/26 12:42:15 by srall            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static double	get_cy_base_top_intersection(t_object *cy, t_vec3 ray, int sign,
 
 	obj.center = add_vec(cy->center, multiply_scalar_vec(cy->vec_norm,
 				cy->height / 2 * sign));
-	obj.vec_norm = cy->vec_norm;
+	obj.vec_norm = multiply_scalar_vec(cy->vec_norm, sign);
 	dist = get_plane_intersection(&obj, ray, ray_origin);
 	if (dist > 0)
 	{

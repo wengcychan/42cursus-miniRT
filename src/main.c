@@ -6,37 +6,37 @@
 /*   By: srall <srall@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 23:59:11 by srall             #+#    #+#             */
-/*   Updated: 2023/08/07 01:16:59 by srall            ###   ########.fr       */
+/*   Updated: 2023/10/28 07:04:10 by srall            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	ray_tracing(t_scene *scene, t_data *data)
+static void	ray_tracing(t_scene *sc, t_data *data)
 {
 	int			i;
 	int			j;
-	t_intersect	intersect;
+	t_intersect	its;
 
 	i = -1;
-	while (++i < scene->resolution[0])
+	while (++i < sc->resolution[0])
 	{
 		j = -1;
-		while (++j < scene->resolution[1])
+		while (++j < sc->resolution[1])
 		{
-			intersect.incident_ray = generate_ray(scene, i, j);
-			get_nearest_obj(scene->obj_lst, scene, &intersect);
-			if (intersect.obj)
+			its.incident_ray = generate_ray(sc, i, j);
+			get_nearest_obj(sc->obj_lst, sc, &its);
+			if (its.obj)
 			{
-				if (!get_light_intersection(scene->obj_lst, scene, &intersect))
-					my_mlx_pixel_put(data, i, j, get_shading_color(scene,
-							intersect));
+				if (!get_light_intersection(sc->obj_lst, sc, &its))
+					my_mlx_pixel_put(data, i, j, get_shading_color(sc,
+							its));
 				else
-					my_mlx_pixel_put(data, i, j, 0x000000);
+					my_mlx_pixel_put(data, i, j, get_am(sc->ambient, its.obj));
 			}
 			else
-				my_mlx_pixel_put(data, i, j, get_trgb(scene->bg_color.x,
-						scene->bg_color.y, scene->bg_color.z));
+				my_mlx_pixel_put(data, i, j, get_trgb(sc->bg_color.x,
+						sc->bg_color.y, sc->bg_color.z));
 		}
 	}
 }
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 	t_scene		scene;
 	t_vars		vars;
 
-	if (ac < 2 || check_filename(av[1]))
+	if (ac != 2 || check_filename(av[1]))
 		ft_error("Input Error: ./minirt <description.rt>\n", 1);
 	check_file(av[1]);
 	init_scene(av[1], &scene);

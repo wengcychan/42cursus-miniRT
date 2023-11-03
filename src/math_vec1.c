@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math_vec1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srall <srall@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lliu <lliu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 00:01:05 by srall             #+#    #+#             */
-/*   Updated: 2023/08/07 01:27:17 by srall            ###   ########.fr       */
+/*   Updated: 2023/10/27 15:48:06 by lliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ t_vec3	normalize_vec(t_vec3 vec)
 	double	length;
 
 	length = vec_length(vec);
+	if (length == 0)
+		return (vec);
 	unit_vec.x = vec.x / length;
 	unit_vec.y = vec.y / length;
 	unit_vec.z = vec.z / length;
