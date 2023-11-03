@@ -38,3 +38,11 @@ To compile and run miniRT, follow these steps:
 	./miniRT scene.rt
 	```
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Replace `scene.rt` with the name of your scene description file.
+
+## Showcase
+
+![snowman](./images/snowman.png)
+<br> <br>
+![bear](./images/bear.png)
+<br> <br>
+![sphere](./images/sphere.png)
