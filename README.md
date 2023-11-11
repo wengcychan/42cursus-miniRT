@@ -46,3 +46,8 @@ To compile and run miniRT, follow these steps:
 ![bear](./images/bear.png)
 <br> <br>
 ![sphere](./images/sphere.png)
+
+## Contributors
+
+- [Lei](https://github.com/srall123)
+- [Wing](https://github.com/wengcychan)
