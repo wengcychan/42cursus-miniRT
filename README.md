@@ -41,11 +41,11 @@ To compile and run miniRT, follow these steps:
 
 ## Showcase
 
+![ballon](./images/balloon_dog.png)
+<br> <br>
 ![snowman](./images/snowman.png)
 <br> <br>
 ![bear](./images/bear.png)
-<br> <br>
-![sphere](./images/sphere.png)
 
 ## Contributors
 
